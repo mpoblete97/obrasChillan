@@ -1,0 +1,161 @@
+<h1>Editar Propuesta</h1>
+<div class="container" *ngIf="getReporte()">
+  <form [formGroup]="formPropuesta" enctype="multipart/form-data" method="post" action='upload'>
+    <fieldset>
+      <div class="row">
+        <div class="col-md-4">
+          <label>ID Reporte: </label>
+          <input class="form-control" id="idr" type="text" formControlName="id_reporte"
+                 placeholder="{{getReporte().idReporte}}"
+                 readonly>
+        </div>
+        <div class="col-md-4">
+          <label>Fecha: </label>
+          <input class="form-control" id="fechar" type="text" formControlName="fecha_reporte"
+                 placeholder="{{transformDate(getReporte().fecha)}}" readonly>
+        </div>
+        <div class="col-md-4">
+          <label>Estado: </label>
+          <input class="form-control" id="estado" type="text" formControlName="estado"
+                 placeholder="{{getReporte().estado}}"
+                 readonly>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label>Descripción de Reporte: </label>
+          <p class="descripcion">{{getReporte().descripcion}}</p>
+        </div>
+        <!--      </div>-->
+        <!--      <div class="row">-->
+        <div class="col-md-4">
+          <label>ID Propuesta: </label>
+          <input class="form-control" id="idp" type="text" formControlName="id_propuesta"
+                 placeholder="P{{getReporte().idReporte}}" readonly>
+        </div>
+        <div class="col-md-4">
+          <label>Fecha Propuesta: </label>
+          <input class="form-control" id="fechap" type="text" formControlName="fecha_propuesta"
+                 placeholder="{{transformDate(fechaHoy.toString())}}" readonly>
+        </div>
+        <div class="col-md-4">
+          <label>Tipo: </label>
+          <select formControlName="tipo" id="tipo" name="categoria" class="form-control">
+            <option selected>{{tipo}}</option>
+            <option>Construcción</option>
+            <option>Reparación</option>
+          </select>
+          <div *ngIf="formPropuesta.get('tipo').errors && (formPropuesta.get('tipo').touched
+                                       || formPropuesta.get('tipo').dirty || obligatorio)"
+               class="form-text text-danger">Campo obligatorio
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label>Descripción de Propuesta:</label>
+          <textarea id="desc_prop" class="form-control" formControlName="descripcion_propuesta" rows="4"></textarea>
+          <div *ngIf="formPropuesta.get('descripcion_propuesta').errors && (formPropuesta.get('descripcion_propuesta').touched
+                                       || formPropuesta.get('descripcion_propuesta').dirty || obligatorio)"
+               class="form-text text-danger">Campo obligatorio
+          </div>
+        </div>
+        <!--      </div>-->
+        <!--      <div class="row">-->
+        <div class="col-md-12">
+          <label>Costos asociados: </label>
+        </div>
+      </div>
+      <div class="row" id="costo0">
+        <div class="col-md-3">
+          <input class="form-control" type="text" formControlName="costos"
+                 placeholder="Ingrese Detalle" >
+        </div>
+        <div class="col-md-2">
+          <input class="form-control" type="text" formControlName="costos" placeholder="$ Monto" >
+        </div>
+        <div class="col-md-2">
+          <input class="form-control" type="text" formControlName="costos"
+                 placeholder="Cantidad" >
+        </div>
+        <div class="col-md-3">
+          <input class="form-control" type="text" formControlName="costos"
+                 placeholder="Monto Final" readonly>
+        </div>
+        <div class="col-md-2" id="botones" style="text-align: center">
+          <button class="btn btn-success" (click)="saveCosto(this)"><i class="fa fa-check"></i></button>
+          <button class="btn btn-danger" (click)="deleteCosto(this)"><i class="fa fa-trash"></i></button>
+          <button class="btn btn-warning" disabled (click)="editCosto(this)"><i class="fa fa-pencil"></i></button>
+        </div>
+      </div>
+      <div class="row" id="btn-submit">
+        <div class="col-md-6"></div>
+        <div class="col-md-3" style="text-align: center">
+          <input class="form-control" placeholder="Total" value="{{this.montoTotal | currency:'CLP':'symbol-narrow':'4.1-1'}}" readonly>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-primary" (click)="addCosto()"><i class="fa fa-plus"></i>Añadir Costo</button>
+        </div>
+      </div>
+      <br>
+      <div class="archivos">
+        <div class="row">
+          <h4 class="col-md-9">Archivos de la propuesta: </h4>
+          <button class="btn-primary col-md-3" (click)="upload()">Añadir Archivo</button>
+          <input formControlName="files" multiple hidden enctype="multipart/form-data" method="post" action='upload' (click)="upload()"  type="file" accept=".pdf,.doc,.xlsx" class="custom-file-input" id="customFile"
+                 name="imagen" (change)="onFileChange($event)"
+                 lang="es"style="display: none;" />
+        </div>
+        <table id="tabla" class="table">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Tipo</th>
+            <th style="text-align: center" scope="col">Descartar</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let archivo of archivos; let i=index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{archivo.url.slice(40)}}</td>
+            <td>
+              <label *ngIf="extension(archivo.url.slice(40))== 'pdf'">PDF</label>
+              <label *ngIf="extension(archivo.url.slice(40))== 'doc' || extension(archivo.url.slice(40))=='docx'">WORD</label>
+              <label *ngIf="extension(archivo.url.slice(40))=='xlsx'" src="assets/Excel.png ">EXCEL</label>
+              <img *ngIf="extension(archivo.url.slice(40))== 'pdf'" src="assets/pdf.png" alt="" style="background: transparent" width="30" height="30">
+              <img *ngIf="extension(archivo.url.slice(40))== 'doc' || extension(archivo.url.slice(40))=='docx'" src="assets/word.png " alt=" " style="background: transparent " width="30 " height="30 ">
+              <img *ngIf="extension(archivo.url.slice(40))=='xlsx'" src="assets/Excel.png " alt=" " style="background: transparent " width="30 " height="30 ">
+            </td>
+            <td style="text-align: center"><button type="button" class="btn btn-danger" (click)="descartar(i)"><i class="fa fa-trash"></i></button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+<!--      <div class="row">-->
+<!--        <div class="col-md-12">-->
+<!--          <label>Subir Archivos: (puedes subir cotizaciones y/o proyecto detallado en varios formatos. Ejemplo: .pdf, .doc, .docx y .xlsx)</label>-->
+<!--        </div>-->
+<!--        <div class="col-md-12">-->
+<!--          <div class="input-group">-->
+<!--            <div class="custom-file">-->
+<!--              <input formControlName="files" type="file" class="custom-file-input" name="imagen" accept=".pdf,.doc,.docx,.xlsx" multiple (change)="onFileChange($event)" lang="es">-->
+<!--              <label class="custom-file-label" data-browse="Seleccionar"><i class="fa fa-paperclip" aria-hidden="true"></i>{{subir}}</label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <div *ngIf="formPropuesta.get('files').errors && (formPropuesta.get('files').touched-->
+<!--                                       || formPropuesta.get('files').dirty ||obligatorio)"-->
+<!--             class="form-text text-danger col-md-12">Campo obligatorio. Debe ingresar al menos un documento.-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="row" style="margin-top: 2em;">
+        <div class="col-md-12" style="text-align: center">
+          <button class="muni" id="generar" (click)="editarPropuesta()"><i class="fa fa-file"></i>  Editar Propuesta</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <div class="progress-line" style="position: relative;bottom: 40vh;display: none"></div>
+</div>
+

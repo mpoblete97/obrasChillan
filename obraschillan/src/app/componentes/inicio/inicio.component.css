@@ -1,0 +1,110 @@
+html,body{
+  margin: 0;
+  padding: 0px;
+  overflow-x: hidden;
+
+}
+.content{
+  min-height: calc(100vh - 110px);
+
+
+}
+
+.contenedor{
+  padding: 2em;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  justify-items: center;
+}
+.contenedor #texto{
+  vertical-align: middle;
+}
+#principal_img{
+  width: 100%;
+  margin-top: 10%;
+  margin-right: 10%;
+  position: relative;
+  transition: all 0.5s ease;
+
+}
+#above{
+  /*display: flex;*/
+  position: absolute;
+  top:32%;
+  left: 20%;
+  right: 20%;
+  color: white;
+  font-weight: bold;
+  font-size: 23px;
+  visibility: hidden;
+  opacity: 0;
+  margin: 10px auto;
+  /*background: rgba(29, 106, 154, 0.72);*/
+  background: rgba(36, 37, 42, 0.72);
+  transition: opacity.2s, visibility .2s;
+}
+p{
+  font-size:24px;
+}
+.principal_img:hover #above{
+  visibility: visible;
+  opacity: 1;
+}
+.principal_img:hover #principal_img{
+  filter: blur(4px);
+}
+
+.principal_img{
+  text-align: center;
+  padding: 1em;
+}
+
+.contenedor h1,div{
+  text-align: center;
+}
+.contenedor p{
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+.modal-dialog{
+  display: flex;
+  justify-content: center;
+  overflow-y: initial !important
+}
+
+.modal-content{
+  width: 160vh;
+}
+.modal-body {
+  width: 150vh;
+}
+
+.fa-question-circle:hover{
+  color:#f2ab31;
+}
+
+.col-md-6{
+  text-align: center;
+  overflow-x: hidden;
+}
+.col-md-5{
+  margin: auto;
+}
+
+.casos{
+  width: 25vh;
+  height: 25vh;
+}
+.row:first-child{
+  padding-top:6vh;
+}
+.row:last-child{
+  padding-bottom: 6vh;
+}
+
+

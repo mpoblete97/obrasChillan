@@ -1,0 +1,31 @@
+<!-- Formulario de Inicio de Sesión -->
+<div class="form-inicio">
+  <form [formGroup]="formLogin">
+    <fieldset>
+      <legend>Iniciar Sesión</legend>
+      <input type="text" formControlName="correo" name="email" placeholder="Correo Electrónico">
+      <div class="form-text text-danger" *ngIf="this.formLogin.get('correo').errors && (formLogin.get('correo').touched || formLogin
+                  .get('correo').dirty)">Tu correo es obligatorio
+      </div>
+      <input type="password" formControlName="contrasena" name="contraseña" placeholder="Contraseña">
+      <div class="form-text text-danger" *ngIf="this.formLogin.get('contrasena').errors && (formLogin.get('contrasena').touched || formLogin
+                  .get('contrasena').dirty)">La contraseña es obligatoria
+      </div>
+    </fieldset>
+    <p class="reset" (click)="reset()"><u>¿Haz olvidado tu contraseña? ¡Haz clic aquí! </u></p>
+    <input type="submit" value="Iniciar" (click)="checkLogin()" [disabled]="!formLogin.valid"/>
+    <div class="row omb_row-sm-offset-3 omb_loginOr">
+      <div class="col-xs-12 col-md-12">
+        -<span class="omb_spanOr">o</span>-
+      </div>
+    </div>
+    <div class="row omb_row-sm-offset-3 omb_socialButtons">
+      <button class="btn btn-lg btn-block omb_btn-google" (click)="iniciaGoogle()">
+        <i class="fa fa-google" aria-hidden="true"></i>
+        <span class="hidden-xs ">&nbsp;Google</span>
+      </button>
+    </div>
+
+  </form>
+  <div class="progress-line" style="display: none"></div>
+</div>

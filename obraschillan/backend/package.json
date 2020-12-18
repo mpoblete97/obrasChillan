@@ -1,0 +1,42 @@
+{
+  "name": "backend-server",
+  "version": "1.0.0",
+  "description": "Servidor backend - obraschillan",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "QueSePoSa",
+  "license": "ISC",
+  "dependencies": {
+    "@nodelib/fs.stat": "^2.0.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "clean": "^4.0.2",
+    "connect-flash": "^0.1.1",
+    "core-util-is": "^1.0.2",
+    "cors": "^2.8.5",
+    "crypto-random-string": "^3.2.0",
+    "custom-env": "^2.0.1",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.9",
+    "express-handlebars": "^5.1.0",
+    "express-mysql-session": "^2.1.4",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
+    "google-auth-library": "^6.0.6",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.27.0",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.4.11",
+    "passport-local": "^1.0.0",
+    "timeago.js": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

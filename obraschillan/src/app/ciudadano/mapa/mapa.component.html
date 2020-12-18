@@ -1,0 +1,16 @@
+<!--<agm-map  *ngIf="router.isActive('/dash_Ciudadano', true) || router.isActive('/dashCiudadano/ingresar_reporte', true)" (mapClick)="agregarMarcador($event)" [latitude]="lat" [longitude]="lng" [zoom]="14.7">-->
+<!--  <agm-marker [label]="labelOptions" [iconUrl]="iconMap" *ngIf="marcador" [latitude]="marcador.latitud" [longitude]="marcador.longitud">-->
+<!--  </agm-marker>-->
+
+<!--</agm-map>-->
+
+<agm-map  *ngIf="router.isActive('/dashCiudadano/modificar_reporte', true)"  [latitude]="latRepo" [longitude]="longRepo" [zoom]="14.7">
+  <agm-marker [latitude]="latRepo" [longitude]="longRepo" [label]="labelOptions" [iconUrl]="iconMap"></agm-marker>
+</agm-map>
+
+<agm-map *ngIf="router.isActive('/dashEncargado/reportes', true) || router.isActive('/dashFinanzas/propuestas', true) || router.isActive('/dashCiudadano/reportes_ingresados',true) || router.isActive('/dashEncargado/propuestas',true)" [latitude]="latRepo" [longitude]="longRepo" [zoom]="14.7">
+  <agm-marker  [latitude]="latRepo" [longitude]="longRepo"></agm-marker>
+</agm-map>
+<agm-map *ngIf="router.isActive('/dash_Ciudadano', true) || router.isActive('/dashCiudadano/ingresar_reporte', true)" [latitude]="lat" [longitude]="lng" [zoom]="14.7">
+  <agm-marker  [label]="labelOptions" [iconUrl]="iconMap" [latitude]="latRepo" [longitude]="longRepo"></agm-marker>
+</agm-map>

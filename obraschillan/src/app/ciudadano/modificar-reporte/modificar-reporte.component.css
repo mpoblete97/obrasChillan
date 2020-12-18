@@ -1,0 +1,160 @@
+body{
+  font-family: "Roboto", sans-serif;
+}
+
+.eliminarImage{
+  width: 150px;
+  height: 100px;
+}
+
+.custom-file-input{
+  overflow: hidden;
+}
+
+.custom-file-label{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+label{
+  z-index: 0;
+}
+
+.ver{
+  width: 100%;
+  justify-content: center;
+}
+
+.eliminar{
+  margin-top: 3vh;
+}
+
+*{
+  font-family: "Roboto", sans-serif;
+}
+
+.tabla{
+  max-width: 97%;
+}
+
+i{
+  font-family: 'FontAwesome';
+}
+
+.tabla{
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: auto;
+  width: 95%;
+}
+.modal-dialog{
+  display: flex;
+  justify-content: center;
+  overflow-y: initial !important;
+}
+
+.modal-content{
+  width: 100vh;
+  display: flex;
+}
+.modal-body{
+  width: 90vh;
+  height: auto ;
+  overflow-y: auto;
+  clear: both;
+}
+
+.modal-footer{
+  margin-top: 3vh;
+}
+
+.botones{
+  margin-right: 10vh;
+}
+
+.progress-line, .progress-line:before {
+  height: 6px;
+  width: 100%;
+  margin: 0;
+}
+.progress-line {
+  background-color: #b3d4fc;
+  display: -webkit-flex;
+  display: flex;
+}
+.progress-line:before {
+  background-color: #3f51b5;
+  content: '';
+  -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@-webkit-keyframes running-progress {
+  0% { margin-left: 0px; margin-right: 100%; }
+  50% { margin-left: 25%; margin-right: 0%; }
+  100% { margin-left: 100%; margin-right: 0; }
+}
+@keyframes running-progress {
+  0% { margin-left: 0px; margin-right: 100%; }
+  50% { margin-left: 25%; margin-right: 0%; }
+  100% { margin-left: 100%; margin-right: 0; }
+}
+
+
+@media screen and (max-width: 1024px) {
+  .modal-dialog{
+    display: flex;
+    justify-content: center;
+    overflow-y: initial !important
+  }
+
+
+  .modal-content{
+    width: 60vh;
+  }
+  .modal-body{
+    width: 60vh;
+    height: 84vh;
+    overflow-y: scroll;
+  }
+
+
+  .botones{
+    margin-right: 1vh;
+  }
+}
+
+@media screen and (max-width: 575px) {
+
+
+  .modal{
+    margin-top: 2.5vh;
+  }
+
+  .modal-body{
+    height: 90vh;
+  }
+
+  .modal-footer .custom-control{
+    margin-right: 0vh;
+  }
+}
+
+
+@media screen and (max-width: 450px) {
+
+  .modal-content{
+    width: 45vh;
+  }
+
+  /*  .modal{*/
+  /*    margin-top: 11vh;*/
+  /*  }*/
+
+  .modal-body{
+    width:45vh;
+    height: 77vh;
+  }
+
+}
+

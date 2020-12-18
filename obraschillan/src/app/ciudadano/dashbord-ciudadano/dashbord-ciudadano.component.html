@@ -1,0 +1,80 @@
+<input id="check" type="checkbox" [(ngModel)]="check" (ngModelChange)="onCheckChange()">
+
+<header>
+  <div class="row">
+    <div class="col" style="max-width: 200px">
+      <div class="izquierda">
+        <img alt="" src="../../../assets/logo-obras.png">
+      </div>
+    </div>
+    <div class="burger" id="sidebar_btn">
+      <label for="check">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </label>
+    </div>
+  </div>
+</header>
+
+<div class="sidebar">
+
+  <div *ngIf="!charging" class="foto">
+    <img alt="Ir a Perfil" [src]="User.imagenPerfil | image:'./../../assets/perfilImagenDefecto.png'" class="imagen_perfil" (click)="goPerfil()" style="cursor:pointer;">
+  </div>
+  <div *ngIf="!charging" style="margin: auto; align-content: center; text-align: center;">
+    <h4>{{User.nombre}} </h4>
+    <strong>{{User.apellido}}</strong>
+    <h5>{{tipo}}</h5>
+  </div>
+  <a href="#" routerLink="/dashCiudadano/perfil" (click)="reload('Perfil')"><i class="fa fa-user"></i><span>Perfil</span></a>
+  <a href="#" routerLink="/dashCiudadano/ingresar_reporte" (click)="reload('IReporte')"><i
+    class="fa fa-archive"></i><span>Ingresar Reporte</span></a>
+  <a href="#" (click)="verReportes()" routerLink="/dashCiudadano/reportes_ingresados"><i class="fa fa-th"></i><span>Ver reportes</span></a>
+  <a (click)="logout()"><i class="fa fa-power-off"></i><span>Cerrar Sesión</span></a>
+</div>
+<div class="contenido">
+  <br>
+  <div *ngIf="router.isActive('/dashCiudadano/modificar_reporte', true)">
+    <app-modificar-reporte></app-modificar-reporte>
+  </div>
+  <div *ngIf="router.isActive('/dashCiudadano/perfil',true)"  >
+    <h1 style="text-align: center" >PERFIL</h1>
+    <app-perfil  [User]="User"></app-perfil>
+  </div>
+  <app-ingresar-reporte [User] = 'User'
+    *ngIf="router.isActive('/dashCiudadano/ingresar_reporte', true) || router.isActive('/dash_Ciudadano',true)">
+  </app-ingresar-reporte>
+  <div *ngIf="getReports()&&getReports().length&&router.isActive('/dashCiudadano/reportes_ingresados',false)"style="position: relative">
+    <div style="position: absolute; top: 1px; right: 0px"><h1 (click)= abrirModal()><i class="fa fa-question-circle" aria-hidden="true"></i></h1></div>
+    <h1 style="text-align: center">REPORTES INGRESADOS</h1>
+    <app-tarjeta (reporte1)="atrapadorReportes($event)" *ngFor="let reporte of getReports() | paginate: config" [reporte]="reporte"></app-tarjeta>
+  </div>
+</div>
+
+<pagination-controls class="ngx-pagination"
+  *ngIf="ready&&router.isActive('/dashCiudadano/reportes_ingresados', true)"
+                     [autoHide]="autoHide"
+                     [responsive]="responsive"
+                     [previousLabel]="labels.previousLabel"
+                     [nextLabel]="labels.nextLabel"
+                     [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                     [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                     [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                     (pageChange)="onPageChange($event)"
+></pagination-controls>
+
+<div class="modal" *ngIf="ver" [ngStyle]="{'display':modal.oculto}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <video *ngIf="video" class="myVideo" style="width: 100%" autoplay controls src="../../../assets/matiasdelrio.mp4"></video>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Ready solo la ocupo para este metodo de ver reportes, por lo que es condición suf.-->

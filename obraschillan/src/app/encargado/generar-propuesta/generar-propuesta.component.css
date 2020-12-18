@@ -1,0 +1,124 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+h1{
+  text-align: center;
+}
+
+.custom-file-input{
+  overflow: hidden;
+}
+
+.custom-file-label{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+header{
+  position: fixed;
+  background: #24252a;
+  padding: 20px;
+  width: 100%;
+  height: 60px;
+}
+
+.container{
+  padding: 2em;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+/*.col-md-4 label{*/
+/*  float: left;*/
+/*  margin-right: 1em;*/
+/*  width: 90px;*/
+
+/*}*/
+label{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+#idr, #fechar, #estado, #idp, #fechap, #tipo{
+  width: 105px;
+  text-align: end;
+  float: right;
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#tipo{
+  width: 150px;
+}
+.descripcion{
+  margin-top: 5px;
+  width: 100%;
+  height: auto;
+  text-align: justify;
+  border: 1px solid #ccd4dc;
+  background-color: #ececec;
+  padding: 10px;
+  border-radius: 8px;
+}
+.row{
+  margin: 5px;
+}
+#btn-submit{
+  text-align: right;
+  align-content: end;
+  align-items: end;
+  justify-items: right;
+  justify-content: right;
+
+}
+#costos button{
+  margin-left: 0.5em;
+}
+
+#costos input:last-child{
+
+}
+/*.currency {*/
+/*  border: 1px inset #ccc;*/
+/*  !*position: relative;*!*/
+/*}*/
+/*.currency input {*/
+/*  border: 0;*/
+/*  position: relative;*/
+/*  top: 0;*/
+/*}*/
+@media screen and (max-width: 1125px){
+  #costos .col-md-3{
+    display: inline-flex;
+  }
+}
+.progress-line, .progress-line:before {
+  height: 6px;
+  width: 100%;
+  margin: 0;
+}
+.progress-line {
+  background-color: #b3d4fc;
+  display: -webkit-flex;
+  display: flex;
+}
+.progress-line:before {
+  background-color: #3f51b5;
+  content: '';
+  -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@-webkit-keyframes running-progress {
+  0% { margin-left: 0px; margin-right: 100%; }
+  50% { margin-left: 25%; margin-right: 0%; }
+  100% { margin-left: 100%; margin-right: 0; }
+}
+@keyframes running-progress {
+  0% { margin-left: 0px; margin-right: 100%; }
+  50% { margin-left: 25%; margin-right: 0%; }
+  100% { margin-left: 100%; margin-right: 0; }
+}

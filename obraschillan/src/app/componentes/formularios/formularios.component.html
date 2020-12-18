@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<body>
+<div class="container-fluid">
+  <div class="logo_muni" style="text-align: center">
+    <img src="assets/profile.png" style="width: 120px;margin:auto;">
+  </div>
+  <div class="row">
+    <div class="col-md-4" id="first">
+      <div class="card-container">
+        <img class="round" src="../../../assets/Imagenes%20Encargados/encargado_reportes.png" alt="user"/>
+        <h3>Esteban Sepúlveda</h3>
+        <h6>Pinto</h6>
+        <p>Encargado de Reportes<br/> Jefe de área</p>
+        <br><br>
+      </div>
+    </div>
+    <div class="col-md-4" style="justify-content: center; ">
+      <app-inicio-sesion *ngIf="router.isActive('/login',false)"></app-inicio-sesion>
+      <app-registro *ngIf="router.isActive('/signup',false)"></app-registro>
+      <app-contacto *ngIf="router.isActive('/contacto', false)"></app-contacto>
+      <app-reset-password *ngIf="router.isActive('reset_pass', true)"></app-reset-password>
+      <app-reset-verify *ngIf="router.isActive('reset_verify', true)"></app-reset-verify>
+    </div>
+    <div class="col-md-4">
+      <div class="card-container">
+        <img class="round" src="../../../assets/Imagenes%20Encargados/encargado_finanzas.png" alt="user"/>
+        <h3>Matías Poblete</h3>
+        <h6>Chillán</h6>
+        <p>Encargado de Finanzas<br/> Jefe de área</p>
+        <br><br>
+      </div>
+    </div>
+    <!--    Creado con display none, para aparecer cuando la pantalla se achique-->
+    <div class="dissapear" id="first2">
+      <div class="card-container">
+        <img class="round" src="../../../assets/Imagenes%20Encargados/encargado_reportes.png" alt="user"/>
+        <h3>Esteban Sepúlveda</h3>
+        <h6>Pinto</h6>
+        <p>Encargado de Reportes<br/> Jefe de área</p>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<app-footer></app-footer>

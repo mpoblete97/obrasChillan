@@ -1,0 +1,69 @@
+<input type="checkbox" id="check" [(ngModel)]="check" (ngModelChange)="onCheckChange()">
+
+<header>
+  <div class="row">
+    <div class="col" style="max-width: 200px">
+      <div class="izquierda">
+        <img src="../../../assets/logo-obras.png" alt="">
+      </div>
+    </div>
+    <div class="burger" id="sidebar_btn">
+      <label for="check">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </label>
+    </div>
+  </div>
+
+</header>
+
+<div class="sidebar">
+
+  <div *ngIf="!charging"  class="foto">
+    <img [src]="User.imagenPerfil | image:'./../../assets/perfilImagenDefecto.png'" class="imagen_perfil" alt="Ir a Perfil" (click)="goPerfil()" style="cursor: pointer">
+  </div>
+  <div *ngIf="!charging" style="margin: auto; align-content: center; text-align: center;">
+    <h4>{{User.nombre}}</h4>
+    <strong>{{User.apellido}}</strong>
+    <h5>{{tipo}}</h5>
+  </div>
+  <a href="#" routerLink="/dashFinanzas/perfil" (click)="reload('Perfil')"><i class="fa fa-user"></i><span>Perfil</span></a>
+  <a href="#" routerLink="/dashFinanzas/propuestas" (click)="reload('Propuesta')"><i class="fa fa-th"></i><span>Propuestas</span></a>
+  <a (click)="logout()" ><i class="fa fa-power-off"></i><span>Cerrar Sesión</span></a>
+</div>
+<div class="contenido">
+  <br>
+  <div *ngIf="router.isActive('/dashFinanzas',true)" style="align-items: center;margin-top:36vh;margin-left: 10vh">
+    <img src="assets/logo-obras.png" id="logo" style="max-width: 100vh">
+    <img src="assets/logo-small.png" id="logo_small" style="max-width: 100vh">
+  </div>
+  <div *ngIf="router.isActive('/dashFinanzas/perfil',false)" >
+    <h1 style="text-align: center" >PERFIL</h1>
+    <app-perfil  [User]="User"></app-perfil>
+  </div>
+  <div *ngIf="router.isActive('/dashFinanzas/propuestas',false)" >
+    <h1 style="text-align: center" >PROPUESTAS</h1>
+    <app-tarjeta *ngFor="let propuesta of getPropuestas() | paginate:config" [propuesta]="propuesta"></app-tarjeta>
+  </div>
+
+  <div *ngIf="router.isActive('/dashFinanzas/propuestas', true)">
+<!--    <div *ngIf="!charging2 && getPropuestas().length==0 && router.isActive('/dashFinanzas/propuestas',true)">-->
+<!--      <h1 style="text-align: center">PROPUESTAS</h1>-->
+<!--    </div>-->
+    <div *ngIf="!charging2 && getPropuestas().length==0 && router.isActive('/dashFinanzas/propuestas',true)" class="alert alert-info" id="alert1" role="alert">
+      No existen propuestas
+    </div>
+  </div>
+</div>
+<pagination-controls *ngIf="ready&&router.isActive('/dashFinanzas/propuestas',true) && getPropuestas().length!=0"
+                     [autoHide]="autoHide"
+                     [responsive]="responsive"
+                     [previousLabel]="labels.previousLabel"
+                     [nextLabel]="labels.nextLabel"
+                     [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                     [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                     [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                     (pageChange)="onPageChange($event)"
+></pagination-controls>
+

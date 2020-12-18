@@ -1,0 +1,99 @@
+<input type="checkbox" id="check" [(ngModel)]="check" (ngModelChange)="onCheckChange()">
+<header>
+    <div class="row">
+        <div class="col" style="max-width: 200px">
+            <div class="izquierda">
+                <img src="../../../assets/logo-obras.png" alt="">
+            </div>
+        </div>
+        <div class="burger" id="sidebar_btn">
+            <label for="check">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </label>
+        </div>
+    </div>
+</header>
+<div *ngIf="!charging" class="sidebar">
+    <div class="foto">
+        <img [src]="User.imagenPerfil | image:'../../../assets/perfilImagenDefecto.png'" class="imagen_perfil" (click)="goPerfil()" alt="Ir a Perfil" style="cursor: pointer">
+    </div>
+    <div *ngIf="!charging" style="margin: auto; align-content: center; text-align: center;">
+        <h4>{{User.nombre}}</h4>
+        <strong>{{User.apellido}}</strong>
+        <h5>{{tipo}}</h5>
+    </div>
+    <a href="#" routerLink="/dashEncargado/perfil" (click)="reload('Perfil')"><i class="fa fa-user"></i><span>Perfil</span></a>
+    <a href="#" routerLink="/dashEncargado/reportes" (click)="reload('Reporte')"><i class="fa fa-th"></i><span>Ver Reportes</span></a>
+    <a href="#" routerLink="/dashEncargado/propuestas" (click)="reload('Propuesta')"><i class="fa fa-file"></i><span>Ver Propuestas</span></a>
+    <a (click)="logout()"><i class="fa fa-power-off"></i><span>Cerrar Sesión</span></a>
+</div>
+<div class="contenido">
+    <br>
+    <div *ngIf="router.isActive('/dashEncargado',true)" style="align-items: center;margin-top:36vh;margin-left: 10vh">
+        <img src="assets/logo-obras.png" id="logo" style="max-width: 100vh">
+        <img src="assets/logo-small.png" id="logo_small" style="max-width: 100vh">
+    </div>
+    <div *ngIf="router.isActive('/dashEncargado/perfil',false)">
+        <h1 style="text-align: center">PERFIL</h1>
+        <app-perfil [User]="User"></app-perfil>
+    </div>
+    <div *ngIf="getReports()&&getReports().length&&router.isActive('/dashEncargado/reportes',false)">
+        <h1 style="text-align: center; text-transform: uppercase">{{titulo}}</h1>
+        <br>
+        <div class="row" id="dropdown">
+            <div class="col-md-4">
+                <div class="btn-group dropright">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            ¿Qué quieres ver?
+          </button>
+                    <div class="dropdown-menu">
+                        <!-- Dropdown menu links -->
+                        <a class="dropdown-item" (click)="getNoRecepcionados()">Reportes Ingresados</a>
+                        <a class="dropdown-item" (click)="getRecepcionados('Recepcionados')">Reportes Recepcionados</a>
+                        <a class="dropdown-item" (click)="getConPropuesta()">Reportes con propuesta generada</a>
+                        <a class="dropdown-item" (click)="getRecepcionados('Sin Propuesta Generada')">Reportes sin propuesta generada</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div *ngIf="router.isActive('/dashEncargado/reportes', true)">
+
+        <div *ngIf="!charging2 && getReports().length==0 && router.isActive('/dashEncargado/reportes',true)">
+            <h1 style="text-align: center; text-transform: uppercase">{{titulo}}</h1>
+        </div>
+        <div *ngIf="!charging2 && getReports().length==0 && router.isActive('/dashEncargado/reportes',true)" class="alert alert-info" id="alert" role="alert">
+            No existen {{titulo}}
+        </div>
+    </div>
+
+    <div *ngIf="router.isActive('/dashEncargado/propuestas', true)">
+        <div *ngIf="!charging2 && getPropuestas().length==0 && router.isActive('/dashEncargado/propuestas',true)">
+            <h1 style="text-align: center">PROPUESTAS INGRESADAS</h1>
+        </div>
+        <div *ngIf="!charging2 && getPropuestas().length==0 && router.isActive('/dashEncargado/propuestas',true)" class="alert alert-info" id="alert1" role="alert">
+            No existen propuestas
+        </div>
+    </div>
+    <div *ngIf="!charging2 && getReports()&&getReports().length&&router.isActive('/dashEncargado/reportes',true)">
+        <app-tarjeta *ngFor="let reporte of getReports() | paginate: config" [reporte]="reporte"></app-tarjeta>
+    </div>
+    <div *ngIf="!charging2 && getPropuestas()&&getPropuestas().length&&router.isActive('/dashEncargado/propuestas',true)">
+        <h1 style="text-align: center">PROPUESTAS INGRESADAS</h1>
+        <app-tarjeta *ngFor="let propuesta of getPropuestas() | paginate: config" [propuesta]="propuesta"></app-tarjeta>
+    </div>
+    <app-generar-propuesta *ngIf="router.isActive('/dashEncargado/generar_propuesta',true)"></app-generar-propuesta>
+    <div *ngIf="router.isActive('/dashEncargado/editarpropuesta', true)">
+      <app-editar-propuesta></app-editar-propuesta>
+    </div>
+    <br>
+</div>
+<pagination-controls *ngIf="ready&&router.isActive('/dashEncargado/reportes',true) && getReports().length!=0" [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+    [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)"></pagination-controls>
+
+<pagination-controls *ngIf="ready&&router.isActive('/dashEncargado/propuestas',true) && getPropuestas().length!=0" [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+    [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)"></pagination-controls>

@@ -1,0 +1,69 @@
+<!-- Formulario de Registro -->
+<!-- Formulario de Inicio de Sesión -->
+<div class="form-register" style="margin-bottom: 5em">
+  <form [formGroup]="formRegister">
+    <fieldset>
+      <legend>Registro</legend>
+
+      <input formControlName="nombre" type="text" name="nombre" placeholder="Nombre">
+      <div class="form-text text-danger" *ngIf="this.formRegister.get('nombre').errors && (formRegister.get('nombre').touched || formRegister
+                  .get('nombre').dirty)">Tu nombre es obligatorio
+      </div>
+      <input formControlName="apellido" type="text" name="apellido" placeholder="Apellido">
+      <div class="form-text text-danger" *ngIf="this.formRegister.get('apellido').errors && (formRegister.get('apellido').touched || formRegister
+                  .get('apellido').dirty)">Tu apellido es obligatorio
+      </div>
+      <input formControlName="email" type="email" name="correo" placeholder="Correo Electrónico">
+      <div class="form-text text-danger" *ngIf="this.formRegister.get('email').errors?.required && (formRegister.get('email').touched || formRegister
+                  .get('email').dirty) && !this.formRegister.get('email').value">Tu correo es obligatorio
+      </div>
+      <div class="form-text text-danger" *ngIf="formRegister.get('email').pending"> (Verificando...)</div>
+      <div *ngIf="formRegister.get('email').errors && formRegister.get('email').errors?.existe"
+           class="form-text text-danger">Correo ya registrado en el sístema
+      </div>
+      <div *ngIf="!(formRegister.get('email').errors && formRegister.get('email').errors?.existe)
+                            && !formRegister.get('email').pending && (formRegister.get('email').touched || formRegister.get('email').dirty)
+                            && formRegister.get('email').value && !formRegister.get('email').errors?.pattern"
+           class="form-text text-success">Correo valido
+      </div>
+      <div *ngIf="!(formRegister.get('email').errors && formRegister.get('email').errors?.existe)
+                            && !formRegister.get('email').pending && (formRegister.get('email').touched || formRegister.get('email').dirty)
+                            && formRegister.get('email').value && formRegister.get('email').errors?.pattern"
+           class="form-text text-warning">Debe contener @ y dominio valido
+      </div>
+      <input formControlName="run" type="text" name="run" placeholder="R.U.N">
+      <div class="form-text text-success" *ngIf="this.formRegister.get('run').valid">R.U.N valido</div>
+      <div class="form-text text-danger" *ngIf="this.formRegister.get('run').errors?.required && (formRegister.get('run').touched || formRegister
+                  .get('run').dirty)">Tu RUT es necesario
+      </div>
+      <div class="form-text text-warning" *ngIf="this.formRegister.get('run').errors?.pattern && (formRegister.get('run').touched || formRegister
+                  .get('run').dirty)">Rut con puntos y digito verificador
+      </div>
+      <input formControlName="contrasena" type="password" name="contraseña" placeholder="Contraseña">
+      <div class="form-text text-danger" *ngIf="this.formRegister.get('contrasena').errors?.required && (formRegister.get('contrasena').touched || formRegister
+                  .get('contrasena').dirty)">Debes ingresar una contraseña
+      </div>
+      <div class="form-text text-warning" *ngIf="this.formRegister.get('contrasena').errors?.pattern && (formRegister.get('contrasena').touched || formRegister
+                  .get('contrasena').dirty)">Min.6, A-Z, a-z, 0-9, Max.12
+      </div>
+      <div class="form-text text-success" *ngIf="this.formRegister.get('contrasena').valid">Contraseña valida
+      </div>
+      <input formControlName="contrasenaRepetida" type="password" name="contrasenaRepetida"
+             placeholder="Repetir Contraseña">
+
+      <div *ngIf="formRegister.get('contrasenaRepetida').value!=formRegister.get('contrasena').value && (formRegister.get('contrasenaRepetida').touched
+                          || formRegister.get('contrasenaRepetida').dirty)"
+           class="form-text text-danger">Contraseñas no coinciden
+      </div>
+      <div *ngIf="!(formRegister.get('contrasenaRepetida').value!=formRegister.get('contrasena').value)&&formRegister.get('contrasenaRepetida').value&&(formRegister.get('contrasenaRepetida').touched
+                         || formRegister.get('contrasenaRepetida').dirty)"
+           class="form-text text-success">Contraseñas coinciden
+      </div>
+
+    </fieldset>
+    <input type="submit" value="Registrarse"
+           [disabled]="!formRegister.valid || (formRegister.get('contrasenaRepetida').value!=formRegister.get('contrasena').value)"
+           (click)="register()"/>
+  </form>
+  <div class="progress-line" style="display: none"></div>
+</div>

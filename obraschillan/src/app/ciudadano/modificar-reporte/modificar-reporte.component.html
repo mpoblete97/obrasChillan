@@ -1,0 +1,118 @@
+
+<h1 style="text-align:center">Modificar reporte</h1>
+<div  class="contenedor">
+  <form [formGroup]="formModificar"  enctype="multipart/form-data" method="post" action='upload'>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="categoria">Categoria <i class="fa fa-list" aria-hidden="true"></i></label>
+        <select formControlName="categoria" [(ngModel)]="categoria" id="categoria" class="form-control" (change)="changeIcon(this)">
+          <option selected>Luminaria</option>
+          <option>Tránsito</option>
+          <option>Obstrucción natural</option>
+          <option>Calle sucia</option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label >Dirección <i class="fa fa-location-arrow" aria-hidden="true"></i></label>
+        <input  ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" formControlName="direccion" [(ngModel)]="direccion"  type="text" class="form-control" placeholder="Dirección">
+        <div *ngIf="formModificar.get('direccion').errors && (formModificar.get('direccion').touched
+                                       || formModificar.get('direccion').dirty || obligatorio)"
+             class="form-text text-danger">Campo obligatorio
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label >Descripcion <i class="fa fa-pencil-square-o" aria-hidden="true"></i></label>
+        <textarea formControlName="descripcion" [(ngModel)]="descripcion" type="text" class="form-control" placeholder="Descripción"></textarea>
+        <div *ngIf="formModificar.get('descripcion').errors && (formModificar.get('descripcion').touched
+                                       || formModificar.get('descripcion').dirty || obligatorio)"
+             class="form-text text-danger">Campo obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label *ngIf="imagenes.length!=0" > Imágenes <i class="fa fa-picture-o" aria-hidden="true"></i></label>
+        <label *ngIf="imagenes.length==0" > Adjuntar imágenes <i class="fa fa-picture-o" aria-hidden="true"></i></label>
+        <div class="input-group">
+            <div class="custom-file">
+              <button  class="input-group-text ver" (click)="abrirModal()" *ngIf="imagenes.length>0">Ver imágenes</button>
+              <input  *ngIf="imagenes.length==0" formControlName="files" accept=".png,.jpg,.gif,.jpeg" [(ngModel)]="files" type="file" class="custom-file-input" id="customFile"
+                     multiple (change)="onFileChange($event)" lang="es">
+              <label *ngIf="imagenes.length==0" class="custom-file-label" for="customFile" data-browse="Seleccionar "> <i class="fa fa-paperclip"
+                                                                                               aria-hidden="true"></i> {{subir}}
+              </label>
+            </div>
+        </div>
+        <button class="btn btn-secondary" *ngIf="contain" (click)="abrirModalPreview()" style="float: right; margin-top: 4px"> <i class="fa fa-eye"></i> Ver imágenes</button>
+        <div *ngIf="formModificar.get('files').errors && (formModificar.get('files').touched
+                                       || formModificar.get('files').dirty || obligatorio)"
+             class="form-text text-danger">Campo obligatorio. Debe ingresar al menos una imagen
+        </div>
+        <div class="modal" *ngIf="muestra" [ngStyle]="{'display':modal.oculto}">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title">Imagenes</h2>
+                <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="tabla">
+                  <table class="table">
+                    <thead class="thead-dark">
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let imagen of imagenes; let i=index">
+                      <td><img class="eliminarImage" src="{{imagen.url}}" alt=""></td>
+                      <td><button class="btn btn-danger btn-lg eliminar" (click)="eliminarImagen(imagen.id)" >Eliminar</button></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--    <h4>Marque un punto de referencia <i class="fa fa-map-marker" aria-hidden="true"></i></h4>-->
+    <app-mapa  [categoria]="categoria" [latRepo]="latitud" [longRepo]="longitud" (marcadoSeleccionado)="mostrarMarcador( $event )" ></app-mapa>
+    <br>
+    <div class="row">
+      <div class="col" style="text-align: center">
+        <button class="btn btn-danger btn-lg" (click)="cancelar()">Cancelar</button>
+      </div>
+      <div class="col" style="text-align: center">
+        <button id="modificar" class="btn btn-success btn-lg" [ngModel]="true" ngDefaultControl [ngModelOptions]="{standalone: true}"   (click)="modificarReporte()">Modificar</button>
+      </div>
+    </div>
+  </form>
+  <div class="progress-line" style="position: relative;bottom: 40vh;display: none"></div>
+  <br><br>
+</div>
+
+<<div class="modal" *ngIf="ver2" [ngStyle]="{'display':modal1.oculto2}">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" >
+        <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+        </button>
+      </div>
+      <!--      <div class="card" *ngFor="let url of urls">-->
+      <!--        <img class="card-img-top" [src]="url" alt="">-->
+      <!--      </div>-->
+
+      <div class="container-fluid">
+        <div class="card-columns" style="text-align: center; align-items: center; position: relative">
+          <div class="card" *ngFor="let url of urls; let i = index"  [id]="i" style="text-align: center; max-width: 60%">
+            <img class="card-img img-fluid" [src]="url" style="width: 150px">
+            <!--              (click)="closeThumbnail(i)"-->
+            <a class="card-title" type="button" (click)="closeThumbnail(i)" style="position: absolute; float: right"> <i class="fa fa-trash fa-2x" style="color: red"></i> </a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

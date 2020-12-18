@@ -1,0 +1,97 @@
+<app-navbar></app-navbar>
+<body>
+<div class="content">
+  <div class="row">
+    <div class="col-lg-5 col-md-12 col-sm-12">
+      <div class="contenedor" id="principal">
+        <img src="assets/profile.png" style="width: 120px;">
+        <h1>
+          ¿Qué Hacemos?
+        </h1>
+        <br>
+        <p>La nececesidad de una plataforma en donde los habitantes de nuestra ciudad, Chillán, pudieran ingresar sus problemáticas respecto de:
+          Calles en mal estado, señales de tránsito caídas, falta de señales, etc., nos llevó a desarrollar ObrasChillán, que viene a dar solución
+          a todo esto.
+          A través de esta aplicación web, podrás ingresar cualquier problema relacionado con la infraestructura de nuestra ciudad, y ver en tiempo real
+          el proceso que sigue en la organización, pasando por diversos estados desde recepcionado hasta aceptado o rechazado.
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-7 col-md-12 col-sm-12" style="position: relative">
+      <div style="position: absolute; top: 4px; right: 30px"><h1 (click)= abrirModal()><i class="fa fa-question-circle" aria-hidden="true"></i></h1></div>
+      <div class="principal_img" style="text-align: center; align-items: center; align-content: center;justify-items: center">
+        <img src="../../../assets/inicio_principal.png" alt="" id="principal_img">
+        <p id="above" (click)="this.router.navigate(['/login'])">¿Conoces algún problema en las vias o luminarias de nuestra ciudad?
+        ¡Ingresa y repórtalo!</p>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="contenedor" id="case_1">
+        <h1>
+          Primer Caso Resuelto
+        </h1>
+        <br>
+        <p>
+          En una de las calles más concurridas de nuestra ciudad, un evento se encontraba interrumpiendo el día a día de nuestros
+          transeúntes y automovilistas, es por ello que gracias a un reporte de uno de nuestros usuarios, se pudo entregar la
+          información necesaria para la reparación del problema, aportando así con una solución real para cada habitante
+          que constantemente se topaba con este.
+        </p>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Antes</h2>
+            <img src="../../../assets/1_antes.jpg" class="casos">
+          </div>
+          <div class="col-md-6">
+            <h2>Después</h2>
+            <img src="../../../assets/1_despues.jpg" class="casos">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="contenedor" id="case_2">
+        <h1>
+          Segundo Caso Resuelto
+        </h1>
+        <br>
+        <p>
+          Durante meses, en una de las esquinas de nuestra ciudad, donde claramente existe un alto tráfico, tanto de vehículos
+          como de peatones, una señal de tránsito se encontraba destruída, y gracias al oprtuno reporte de uno de nuestros usuarios
+          se pudo contar con lo necesario para generar el proyecto que diera solución lo antes posible, para así, proteger a cada uno
+          ante eventuales sucesos producto del problema.
+        </p>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Antes</h2>
+            <img src="../../../assets/2_antes.jpg" class="casos">
+          </div>
+          <div class="col-md-6">
+            <h2>Después</h2>
+            <img src="../../../assets/2_despues.jpg" class="casos">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+<div class="modal" *ngIf="ver" [ngStyle]="{'display':modal.oculto}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <video *ngIf="video" class="myVideo" style="width: 100%" autoplay controls src="../../../assets/botonHelpInicio.mp4"></video>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+

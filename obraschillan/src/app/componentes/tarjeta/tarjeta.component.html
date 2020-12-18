@@ -1,0 +1,87 @@
+<div class="container" *ngIf="!charging&&(router.isActive('/dashEncargado/reportes',true)||
+                                            router.isActive('/dashCiudadano/reportes_ingresados',true))">
+    <div class="courses-container">
+        <div class="course">
+            <div class="course-preview">
+                <img src="{{image.url}}" alt="">
+            </div>
+            <div class="course-info">
+                <span class="fecha">
+					{{transformDate(reporte.fecha)}}
+				</span>
+                <h3 id="id">ID: {{reporte.idReporte}}</h3>
+                <label for="id">Estado:</label>
+                <div id="progressbar" class="progressbar">
+                    <ul class="list-unstyled multi-steps">
+                        <li id="Ingresado" [ngClass]="{'is-active':reporte.estado === 'Ingresado' }">
+                            <p>Ingresado</p>
+                        </li>
+                        <li id="Recepcionado" [ngClass]="{'is-active':reporte.estado === 'Recepcionado' }">
+                            <p>Recepcionado</p>
+                        </li>
+                        <li id="En proceso" [ngClass]="{'is-active':reporte.estado === 'En proceso' }">
+                            <p>En proceso</p>
+                        </li>
+                        <li id="Aceptado/Rechazado" [ngClass]="{'is-active':reporte.estado === 'Aceptado' || reporte.estado === 'Rechazado'}">
+                            <p>{{bi_estado}}</p>
+                        </li>
+                    </ul>
+                </div>
+              <h6 style="color: black">{{reporte.descripcion}}</h6>
+                <br>
+                <div class="buttons">
+                    <button  class="btn" (click)="abrirModal('Reporte')"><i class="fa fa-eye"></i> Ver Reporte</button>
+                    <button *ngIf="reporte.estado != 'Recepcionado' && reporte.estado != 'Ingresado' && !router.isActive('dashCiudadano/reportes_ingresados', true)" class="btn" (click)="abrirModal('Propuesta2')"><i class="fa fa-eye"></i> Ver Propuesta</button>
+                    <button *ngIf="router.isActive('dashCiudadano/reportes_ingresados', true) && showModify()" routerLink="/dashCiudadano/modificar_reporte" (click)="enviarReporte($event)" class="btn"><i class="fa fa-pencil"></i> Modificar</button>
+                    <button *ngIf="router.isActive('dashCiudadano/reportes_ingresados', true) && showModify()" (click)="eliminarReporte()" class="btn"><i class="fa fa-trash"></i> Eliminar</button>
+                    <button class="btn" (click)="goToGenerate()" *ngIf="reporte.estado=='Recepcionado' && router.isActive('dashEncargado/reportes', true)">
+            <i class="fa fa-file"></i> Generar Propuesta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="!charging && (router.isActive('/dashFinanzas/propuestas',true) ||  router.isActive('/dashEncargado/propuestas',true))">
+    <div class="courses-container">
+        <div class="course">
+            <div class="course-preview">
+                <img src="{{image.url}}" alt="">
+            </div>
+            <div class="course-info">
+                <span class="fecha">
+					{{transformDate(propuesta.fecha)}}
+				</span>
+                <h3>ID: {{propuesta.idPropuesta}}</h3>
+                <label for="id">Estado:</label>
+                <div *ngIf="!charging" id="progressbar1" class="progressbar">
+                    <ul class="list-unstyled multi-steps">
+                        <li id="Ingresado1" [ngClass]="{'is-active':estado === 'Ingresado' }">
+                            <p>Ingresado</p>
+                        </li>
+                        <li id="Recepcionado1" [ngClass]="{'is-active':estado === 'Recepcionado' }">
+                            <p>Recepcionado</p>
+                        </li>
+                        <li id="En proceso1" [ngClass]="{'is-active':estado === 'En proceso' }">
+                            <p>En proceso</p>
+                        </li>
+                        <li id="Aceptado/Rechazado1" [ngClass]="{'is-active':estado == 'Aceptado' || estado == 'Rechazado'}">
+                            <p>{{bi_estado}}</p>
+                        </li>
+                    </ul>
+                </div>
+                <h6 style="color: black">{{propuesta.descripcion}}</h6>
+                <br>
+                <div class="buttons">
+                    <button class="btn" (click)="abrirModal('Propuesta')"><i class="fa fa-eye"></i> Ver</button>
+                    <button *ngIf="router.isActive('/dashEncargado/propuestas', true) && showModifyPropuesta()" (click)="eliminarPropuesta()" class="btn"><i class="fa fa-trash"></i> Eliminar</button>
+                    <button *ngIf="router.isActive('/dashEncargado/propuestas', true)" (click)="editarPropuesta(propuesta,'editarpropuesta')" class="btn"><i class="fa fa-pencil"></i> editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-ver-tarjeta *ngIf="mostrar && (router.isActive('/dashEncargado/reportes',true)
+                        || router.isActive('/dashEncargado/propuestas', true)
+                        ||  router.isActive('/dashCiudadano/reportes_ingresados',true)
+                        ||  router.isActive('/dashFinanzas/propuestas',true))" (mostrar)="recibe($event)" [nombre]="nombre" [Elemento]="activar()"></app-ver-tarjeta>

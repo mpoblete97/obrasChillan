@@ -1,0 +1,123 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+header{
+  position: fixed;
+  background: #24252a;
+  padding: 20px;
+  width: 100%;
+  height: 60px;
+}
+
+.custom-file-input{
+  overflow: hidden;
+}
+
+.custom-file-label{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/*.card{*/
+/*display: inline-block;*/
+/*  position: relative;*/
+/*}*/
+
+/*.card a{*/
+/*  position: absolute;*/
+/*  background-color: #03BFCB;*/
+/*  color: #24252a;*/
+/*}*/
+
+.contenedor{
+  padding: 2em;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+label{
+  z-index: 0;
+}
+
+/*$custom-file-text: (*/
+/*es: "Elegir"*/
+/*);*/
+.progress-line, .progress-line:before {
+  height: 6px;
+  width: 100%;
+  margin: 0;
+}
+.progress-line {
+  background-color: #b3d4fc;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.fa-question-circle{
+  float: right;
+
+  overflow: hidden;
+}
+
+.fa-question-circle:hover{
+  color:#f2ab31;
+}
+
+.progress-line:before {
+  background-color: #3f51b5;
+  content: '';
+  -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@-webkit-keyframes running-progress {
+  0% { margin-left: 0px; margin-right: 100%; }
+  50% { margin-left: 25%; margin-right: 0%; }
+  100% { margin-left: 100%; margin-right: 0; }
+}
+@keyframes running-progress {
+  0% { margin-left: 0px; margin-right: 100%; }
+  50% { margin-left: 25%; margin-right: 0%; }
+  100% { margin-left: 100%; margin-right: 0; }
+}
+
+.modal-dialog{
+  display: flex;
+  justify-content: center;
+  overflow-y: initial !important
+}
+
+.modal-content{
+  width: 160vh;
+}
+.modal-body {
+  width: 150vh;
+}
+
+#ingresar{
+  background: #052a5d;
+}
+
+#ingresar:hover{
+  color: #f2ab31;
+}
+
+.modal-dialog{
+  display: flex;
+  justify-content: center;
+  overflow-y: initial !important;
+}
+
+.modal-content{
+  width: 100vh;
+  display: flex;
+}
+.modal-body{
+  width: 90vh;
+  height: auto ;
+  overflow-y: auto;
+  clear: both;
+}

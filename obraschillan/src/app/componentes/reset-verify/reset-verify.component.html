@@ -1,0 +1,51 @@
+<body>
+<div class="form-reset-verify">
+  <form [formGroup]="formVerify" *ngIf="visible" id="verify">
+    <fieldset>
+      <legend>
+        <span class="number"><i class="fa fa-key"></i></span>
+        Verificación de código
+      </legend>
+      <p>Debes ingresar el código que te enviamos al correo</p>
+      <input type="text" formControlName="code" placeholder="Ingresa el código">
+      <div class="form-text text-danger" style="margin-top: -30px;margin-left: 1em;width: 100%; text-align: left; font-size: 14px"  *ngIf="this.formVerify.get('code').errors && (formVerify.get('code').touched || formVerify
+                  .get('code').dirty)" >El código es obligatorio
+      </div>
+    </fieldset>
+    <input type="submit" value="Aceptar" id="verify_button" (click)="verify()" [disabled]="!formVerify.valid"/>
+  </form>
+  <div class="progress-line" id="progress1" style="display: none"></div>
+  <form [formGroup]="formPass" *ngIf="!visible" id="change">
+    <fieldset>
+      <legend>
+        Ingresa nueva contraseña
+      </legend>
+      <p>Debes ingresar la nueva contraseña que deseas</p>
+      <input type="password" formControlName="pass" placeholder="Ingresa nueva contraseña">
+      <div style="margin-top: -30px;margin-left: 1em; font-size: 14px" *ngIf="formPass.get('pass').errors?.required && (formPass.get('pass').touched
+                                       || formPass.get('pass').dirty)"
+           class="form-text text-danger">Campo obligatorio
+      </div>
+      <div style="margin-top: -30px;margin-left: 1em; font-size: 14px" *ngIf="formPass.get('pass').errors?.pattern && (formPass.get('pass').touched
+                                       || formPass.get('pass').dirty)"
+           class="form-text text-warning">Min.6, A-Z, a-z, 0-9, Max.12
+      </div>
+      <div style="margin-top: -30px;margin-left: 1em; font-size: 14px" *ngIf="formPass.get('pass').valid && (formPass.get('pass').touched
+                                       || formPass.get('pass').dirty)"
+           class="form-text text-success">Contraseña valida
+      </div>
+      <input type="password" formControlName="pass2" placeholder="Repite la contraseña">
+      <div style="margin-top: -30px;margin-left: 1em; font-size: 14px" *ngIf="formPass.get('pass2').value!=formPass.get('pass').value && (formPass.get('pass2').touched
+                          || formPass.get('pass2').dirty)"
+           class="form-text text-danger">Contraseñas no coinciden
+      </div>
+      <div style="margin-top: -30px;margin-left: 1em; font-size: 14px" *ngIf="formPass.get('pass2').value!=''&&!(formPass.get('pass2').value!=formPass.get('pass').value)&&(formPass.get('pass2').touched
+                         || formPass.get('pass2').dirty)"
+           class="form-text text-success">Contraseñas coinciden
+      </div>
+    </fieldset>
+    <input type="submit" value="Aceptar" id="change_button" (click)="changePass()" [disabled]="!formVerify.valid"/>
+  </form>
+  <div class="progress-line" id="progress2" style="display: none"></div>
+</div>
+</body>

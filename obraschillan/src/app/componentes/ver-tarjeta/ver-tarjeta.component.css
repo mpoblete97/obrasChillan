@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+*{
+  font-family: "Roboto", sans-serif;
+}
+
+.multi-steps > li.is-active:before, .multi-steps > li.is-active ~ li:before {
+  content: counter(stepNum);
+  font-weight: 700;
+}
+.multi-steps > li.is-active:after, .multi-steps > li.is-active ~ li:after {
+  background-color: #ededed;
+}
+.multi-steps {
+  /*background: #2A265F;*/
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+.multi-steps > li {
+  counter-increment: stepNum;
+  text-align: center;
+  display: table-cell;
+  position: relative;
+  color: #219395;
+}
+.multi-steps > li:before {
+  content: '\f00c';
+  content: '\2713';
+  content: '\10003';
+  content: '\10004';
+  content: '\2713';
+  display: block;
+  margin: 0 auto 4px;
+  background-color: #fff;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  font-weight: bold;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #219395;
+  border-radius: 50%;
+}
+.multi-steps > li:after {
+  content: '';
+  height: 3px;
+  width: 100%;
+  background-color: #219395;
+  position: absolute;
+  top: 11px;
+  /*left: 50%;*/
+  z-index: -1;
+}
+.multi-steps > li:last-child:after {
+  display: none;
+}
+.multi-steps > li.is-active:before {
+  background-color: #fff;
+  border-color: #219395;
+}
+.multi-steps > li.is-active ~ li {
+  color: #808080;
+}
+.multi-steps > li.is-active ~ li:before {
+  background-color: #ededed;
+  border-color: #ededed;
+}
+
+/*/////////////////FIN PROGRESS/////////////////*/
+
+.btn-info:hover {
+  color: #f2ab31;
+}
+.contendor{
+  padding-left: 30px;
+  width: 95%;
+  margin: 30px auto;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(6, auto);
+
+  grid-template-areas:  "fecha fecha"
+  "tipo tipo"
+  "progresbar progresbar"
+  "descripcion descripcion"
+  "comentarios comentarios"
+  "razones razones";
+}
+
+.contendor1{
+  padding-left: 30px;
+  width: 95%;
+  margin: 30px auto;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(8, auto);
+
+  grid-template-areas:
+    "titulo titulo"
+    "fecha fecha"
+    "progresbar progresbar"
+    "descripcion descripcion"
+    "comentarios comentarios"
+    "razones razones"
+    "titulo1 titulo1"
+    "fecha1 tipo1"
+    "descripcion1 descripcion1"
+    "comentarios1 comentarios1"
+    "razones1 razones1";
+}
+
+
+.titulo, .fecha, .tipo, .estado,.progressbar .descripcion, .razones,.comentarios,.archivos,.tabla,.titulo1,.fecha1, .tipo1, .estado1, .descripcion1, .razones1,.comentarios1{
+  max-width: 97%;
+}
+.carrusel{
+  width: 90%;
+  margin: auto;
+}
+.progressbar{
+  grid-area: progresbar;
+  z-index: 1;
+}
+
+i{
+  font-family: 'FontAwesome';
+}
+
+.tabla{
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: auto;
+  width: 95%;
+}
+
+.archivos{
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: auto;
+  width: 95%;
+}
+.carousel-item img{
+  height: 50vh;
+}
+
+.carousel, .slide{
+  width: 100%;
+}
+
+.titulo{
+  grid-area: titulo;
+}
+
+.titulo1{
+  grid-area: titulo1;
+}
+.fecha{
+  grid-area: fecha;
+}
+
+.tipo{
+  grid-area: tipo;
+}
+
+.estado{
+  grid-area: estado;
+}
+
+.descripcion{
+  grid-area: descripcion;
+}
+
+.razones{
+  grid-area: razones;
+}
+
+.fecha1{
+  grid-area: fecha1;
+}
+
+.tipo1{
+  grid-area: tipo1;
+}
+
+.estado1{
+  grid-area: estado1;
+}
+
+.descripcion1{
+  grid-area: descripcion1;
+}
+
+.razones1{
+  grid-area: razones1;
+}
+.mapa{
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 95%;
+  margin: auto;
+}
+
+.mapa img{
+  width: 100%;
+}
+
+.comentarios{
+  grid-area: comentarios;
+}
+
+
+/* Important part */
+
+.modal-dialog{
+  display: flex;
+  justify-content: center;
+  overflow-y: initial !important
+}
+
+.modal-content{
+  width: 100vh;
+}
+.modal-body{
+  width: 100vh;
+  height: 82vh;
+  overflow-y: auto;
+}
+
+.modal-footer{
+  margin-top: 3vh;
+}
+
+.botones{
+  margin-right: 10vh;
+}
+
+#recibir{
+  margin-right: 2vh;
+  background: #052a5d;
+  border:#052a5d;
+}
+
+#recibir:hover{
+  color: #f2ab31;
+}
+
+#save{
+  background: #052a5d;
+  border:#052a5d;
+}
+
+#save:hover{
+  color: #f2ab31;
+}
+
+#rechazar{
+  margin-left: 2vh;
+  margin-right: 37vh;
+}
+
+@media screen and (max-width: 1024px) {
+  .contendor{
+    grid-template-areas: "fecha fecha"
+    "tipo tipo"
+    "progresbar progresbar"
+    "descripcion descripcion"
+    "comentarios comentarios"
+    "razones razones";
+  }
+
+  .contendor1{
+    grid-template-areas:
+    "titulo titulo"
+    "fecha fecha"
+    "progresbar progresbar"
+    "descripcion descripcion"
+    "comentarios comentarios"
+    "razones razones"
+    "titulo1 titulo1"
+    "fecha1 fecha1"
+    "tipo1 tipo1"
+    "descripcion1 descripcion1"
+    "comentarios1 comentarios1"
+    "razones1 razones1";
+  }
+  .modal-dialog{
+    display: flex;
+    justify-content: center;
+    overflow-y: initial !important
+  }
+
+
+  .modal-content{
+    width: 60vh;
+  }
+  .modal-body{
+    width: 60vh;
+    height: 84vh;
+    overflow-y: scroll;
+  }
+
+  .mapa{
+    width: 90%;
+  }
+  .carousel-item img{
+    height: 30vh;
+  }
+
+  .botones{
+    margin-right: 1vh;
+  }
+
+  #recibir{
+    margin-right: 1vh;
+  }
+
+  #rechazar{
+    margin-left: 1vh;
+    margin-right: 16vh;
+  }
+}
+
+@media screen and (max-width: 575px) {
+
+
+  .modal{
+    margin-top: 2.5vh;
+  }
+
+  .modal-body{
+    height: 90vh;
+  }
+
+  .modal-footer .custom-control{
+    margin-right: 0vh;
+  }
+}
+
+
+@media screen and (max-width: 450px) {
+
+  .modal-content{
+    width: 45vh;
+  }
+
+/*  .modal{*/
+/*    margin-top: 11vh;*/
+/*  }*/
+
+  .modal-body{
+    width:45vh;
+    height: 77vh;
+  }
+
+  #rechazar{
+    margin-right: 8vh;
+  }
+  #cerrar{
+    margin-top: 1vh;
+  }
+}

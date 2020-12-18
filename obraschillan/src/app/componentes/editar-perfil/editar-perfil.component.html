@@ -1,0 +1,169 @@
+<div class="modal" *ngIf="indefinido && this.modal.cambiarDatos" [ngStyle]="{'display':modal.oculto}" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formPerfil" (ngSubmit)="saveData()">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Perfil</h4>
+          <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group row">
+            <label class="col-3 col-form-label">RUN</label>
+            <div class="col-8">
+              <input formControlName="nuevoRun" [ngModel]="userEditable.run" class="form-control" type="text" >
+              <div *ngIf="formPerfil.get('nuevoRun').errors?.required && (formPerfil.get('nuevoRun').touched
+                                       || formPerfil.get('nuevoRun').dirty)"
+                   class="form-text text-danger">RUN obligatorio
+              </div>
+              <div *ngIf="formPerfil.get('nuevoRun').errors?.pattern && (formPerfil.get('nuevoRun').touched
+                                       || formPerfil.get('nuevoRun').dirty)"
+                   class="form-text text-warning">RUN con puntos y digito verificador
+              </div>
+              <div *ngIf="formPerfil.get('nuevoRun').valid"
+                   class="form-text text-success">RUN valido
+              </div>
+            </div>
+          </div>
+<!--         NOMBRE-->
+          <div class="form-group row">
+            <label class="col-3 col-form-label">Nombre</label>
+            <div class="col-8">
+              <input formControlName="nuevoNombre" [ngModel]="userEditable.nombre" class="form-control" type="text">
+              <div *ngIf="formPerfil.get('nuevoNombre').errors?.required && (formPerfil.get('nuevoNombre').touched
+                                       || formPerfil.get('nuevoNombre').dirty)"
+                   class="form-text text-danger">Tu nombre es obligatorio
+              </div>
+              <div *ngIf="formPerfil.get('nuevoNombre').errors?.minlength && (formPerfil.get('nuevoNombre').touched
+                                       || formPerfil.get('nuevoNombre').dirty)"
+                   class="form-text text-warning">Mínimo de 3 letras
+              </div>
+              <div *ngIf="formPerfil.get('nuevoNombre').errors?.pattern && (formPerfil.get('nuevoNombre').touched
+                                       || formPerfil.get('nuevoNombre').dirty)"
+                   class="form-text text-danger">Sólo se aceptan letras
+              </div>
+              <div *ngIf="(formPerfil.get('nuevoNombre').valid && (formPerfil.get('nuevoNombre').touched
+                                       || formPerfil.get('nuevoNombre').dirty))"
+                   class="form-text text-success">Nombre valido
+              </div>
+            </div>
+          </div>
+<!--          APELLIDO-->
+          <div class="form-group row">
+            <label class="col-3 col-form-label">Apellido</label>
+            <div class="col-8">
+              <input formControlName="nuevoApellido" [ngModel]="userEditable.apellido" class="form-control" type="text">
+              <div *ngIf="formPerfil.get('nuevoApellido').errors?.required && (formPerfil.get('nuevoApellido').touched
+                                       || formPerfil.get('nuevoApellido').dirty)"
+                   class="form-text text-danger">Apellido obligatorio
+              </div>
+              <div *ngIf="formPerfil.get('nuevoApellido').errors?.pattern && (formPerfil.get('nuevoApellido').touched
+                                       || formPerfil.get('nuevoApellido').dirty)"
+                   class="form-text text-danger">Sólo se aceptan letras
+            </div>
+              <div *ngIf="formPerfil.get('nuevoApellido').errors?.minlength && (formPerfil.get('nuevoApellido').touched
+                                       || formPerfil.get('nuevoApellido').dirty)"
+                   class="form-text text-warning">Mínimo de 3 letras
+              </div>
+              <div *ngIf="(formPerfil.get('nuevoApellido').valid && (formPerfil.get('nuevoApellido').touched
+                                       || formPerfil.get('nuevoApellido').dirty))"
+                   class="form-text text-success">Apellido valido
+              </div>
+            </div>
+          </div>
+<!--         EMAIL-->
+          <div class="form-group row">
+            <label class="col-3 col-form-label">Email</label>
+            <div class="col-8">
+              <input formControlName="nuevoEmail" disabled [ngModel]="userEditable.email" class="form-control" type="text">
+              <div *ngIf="formPerfil.get('nuevoEmail').errors && (formPerfil.get('nuevoEmail').touched
+                                       || formPerfil.get('nuevoEmail').dirty)"
+                   class="form-text text-danger">Campo obligatorio
+              </div>
+            </div>
+          </div>
+
+
+        <div class="modal-footer">
+          <button id="save" type="submit" class="btn btn-primary" [disabled]= "deshabilitar()">Guardar</button>
+          <button (click)="ocultarModal()" type="button" class="btn btn-danger">Cerrar</button>
+        </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="indefinido && this.modal.cambiarPass" [ngStyle]="{'display':modal.oculto}" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formContrasena" (ngSubmit)="saveData()" novalidate>
+
+        <div class="modal-header">
+          <h4 class="modal-title">Cambiar Contraseña</h4>
+          <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div *ngIf="User.contrasena" class="form-group row">
+            <label class="col-3 col-form-label">Contraseña actual</label>
+            <div class="col-8">
+              <input formControlName="contrasenaActual" class="form-control" type="password">
+                <span *ngIf="formContrasena.get('contrasenaActual').pending"> (Verificando...)</span>
+                            <div *ngIf="formContrasena.get('contrasenaActual').errors?.required && (formContrasena.get('contrasenaActual').touched
+                                       || formContrasena.get('contrasenaActual').dirty)" class="form-text text-danger">Campo obligatorio
+                            </div>
+                            <div *ngIf="formContrasena.get('contrasenaActual').errors && formContrasena.get('contrasenaActual').errors?.existe"
+                                 class="form-text text-danger">Contraseña incorrecta
+                            </div>
+                            <div *ngIf="!(formContrasena.get('contrasenaActual').errors && formContrasena.get('contrasenaActual').errors?.existe)
+                            && !formContrasena.get('contrasenaActual').pending && (formContrasena.get('contrasenaActual').touched || formContrasena.get('contrasenaActual').dirty)
+                            && formContrasena.get('contrasenaActual').value"
+                                 class="form-text text-success">Contraseña correcta
+                            </div>
+
+            </div>
+          </div>
+          <!-- nombre del producto -->
+          <div class="form-group row">
+            <label class="col-3 col-form-label">Nueva contraseña</label>
+            <div class="col-8">
+              <input formControlName="contrasenaNueva" class="form-control" type="password">
+                           <div *ngIf="formContrasena.get('contrasenaNueva').errors?.required && (formContrasena.get('contrasenaNueva').touched
+                                       || formContrasena.get('contrasenaNueva').dirty)" class="form-text text-danger">Campo obligatorio
+                           </div>
+                           <div *ngIf="formContrasena.get('contrasenaNueva').errors?.pattern && (formContrasena.get('contrasenaNueva').touched
+                                       || formContrasena.get('contrasenaNueva').dirty)" class="form-text text-warning">Min.6, A-Z, a-z, 0-9, Max.12</div>
+                          <div *ngIf="formContrasena.get('contrasenaNueva').valid" class="form-text text-success">Contraseña valida </div>
+            </div>
+          </div>
+          <!-- Codigo -->
+          <div class="form-group row">
+            <label class="col-3 col-form-label">Repetir contraseña</label>
+            <div class="col-8">
+              <input formControlName="contrasenaRep" class="form-control" type="password">
+                          <div *ngIf="formContrasena.get('contrasenaRep').value!=formContrasena.get('contrasenaNueva').value && !formContrasena.get('contrasenaRep').errors?.required && (formContrasena.get('contrasenaRep').touched
+                          || formContrasena.get('contrasenaRep').dirty)"
+                               class="form-text text-danger">Contraseñas no coinciden
+                         </div>
+                          <div *ngIf="formContrasena.get('contrasenaRep').errors?.required && (formContrasena.get('contrasenaRep').touched
+                                       || formContrasena.get('contrasenaRep').dirty)" class="form-text text-danger">Campo obligatorio
+                          </div>
+                         <div *ngIf="!(formContrasena.get('contrasenaRep').value!=formContrasena.get('contrasenaNueva').value)&&formContrasena.get('contrasenaNueva').valid&&(formContrasena.get('contrasenaRep').touched
+                         && formContrasena.get('contrasenaRep').value || formContrasena.get('contrasenaRep').dirty)"
+                              class="form-text text-success">Contraseñas coinciden
+                        </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="save" type="submit" [disabled]="!formContrasena.valid || formContrasena.get('contrasenaRep').value!=formContrasena.get('contrasenaNueva').value" class="btn btn-primary">Guardar</button>
+            <button (click)="ocultarModal()" type="button" class="btn btn-danger">Cerrar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

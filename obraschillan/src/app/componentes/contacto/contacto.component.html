@@ -1,0 +1,27 @@
+<!-- Formulario de Inicio de Sesión -->
+<div class="form-contacto">
+  <form [formGroup]="formContacto">
+    <fieldset>
+      <legend>Contáctanos</legend>
+      <p>Al enviarnos un mensaje, te contactaras con uno de los encargados de
+      área que se muestran a ambos lados del formulario. A través de esto, puedes
+      solicitar información de nuestra unidad e ingresar reclamos, comentarios o sugerencias.
+        Responderemos a la brevedad
+        ¡Que tengas un buen día!</p>
+      <input type="text" formControlName="nombre" placeholder="Nombre">
+      <div class="form-text text-danger"  *ngIf="this.formContacto.get('nombre').errors && (formContacto.get('nombre').touched || formContacto
+                  .get('nombre').dirty)" >Tu nombre es obligatorio
+      </div>
+      <input type="email" formControlName="correo" placeholder="Correo Electrónico">
+      <div class="form-text text-danger"  *ngIf="this.formContacto.get('correo').errors && (formContacto.get('correo').touched || formContacto
+                  .get('correo').dirty)" >Tu correo es obligatorio
+      </div>
+      <textarea formControlName="mensaje" placeholder="Tu mensaje"></textarea>
+      <div class="form-text text-danger"  *ngIf="this.formContacto.get('mensaje').errors && (formContacto.get('mensaje').touched || formContacto
+                  .get('mensaje').dirty)" >Tu mensaje es obligatorio
+      </div>
+    </fieldset>
+    <input type="submit" value="Enviar" (click)="send()" [disabled]="!formContacto.valid"/>
+  </form>
+  <div class="progress-line" style="display: none"></div>
+</div>

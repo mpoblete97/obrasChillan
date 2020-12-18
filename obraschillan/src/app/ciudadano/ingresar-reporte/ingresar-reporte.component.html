@@ -1,0 +1,126 @@
+<div class="titulo" style="position: relative">
+  <h1 style="text-align:center">Ingresar reporte</h1>
+  <div style="position: absolute; top: 4px; right: 30px"><h1 (click)=abrirModal()><i class="fa fa-question-circle"
+                                                                                     aria-hidden="true"></i></h1></div>
+</div>
+<div class="contenedor">
+  <form [formGroup]="formIngresar" enctype="multipart/form-data" method="post" action='upload'>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Categoría <i class="fa fa-list" aria-hidden="true"></i></label>
+        <select formControlName="categoria" [(ngModel)]="categoria" name="categoria" id="select" class="form-control"
+                (change)="changeIcon(this)">
+          <option>Luminaria</option>
+          <option>Tránsito</option>
+          <option>Obstrucción natural</option>
+          <option>Calle sucia</option>
+        </select>
+        <div *ngIf="formIngresar.get('categoria').errors && (formIngresar.get('categoria').touched
+                                       || formIngresar.get('categoria').dirty || obligatorio)"
+             class="form-text text-danger">Campo obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label>Dirección <i class="fa fa-location-arrow" aria-hidden="true"></i></label>
+        <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" formControlName="direccion" [(ngModel)]="direccion" type="text" class="form-control" name="direccion"
+               placeholder="Calle y número">
+        <div *ngIf="formIngresar.get('direccion').errors && (formIngresar.get('direccion').touched
+                                       || formIngresar.get('direccion').dirty || obligatorio)"
+             class="form-text text-danger">Campo obligatorio
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Descripción <i class="fa fa-pencil-square-o" aria-hidden="true"></i></label>
+        <textarea formControlName="descripcion" [(ngModel)]="descripcion" type="text" class="form-control"
+                  name="descripcion" placeholder="Descripción"></textarea>
+        <div *ngIf="formIngresar.get('descripcion').errors && (formIngresar.get('descripcion').touched
+                                       || formIngresar.get('descripcion').dirty || obligatorio)"
+             class="form-text text-danger">Campo obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label>Adjuntar imágenes <i class="fa fa-picture-o" aria-hidden="true"></i> </label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input formControlName="files" accept=".png,.jpg,.gif,.jpeg" [(ngModel)]="files" type="file"
+                   class="custom-file-input" id="customFile"
+                   name="file[]" multiple (change)="onFileChange($event)" lang="es">
+            <label class="custom-file-label" for="customFile" data-browse="Seleccionar "> <i class="fa fa-paperclip"
+                                                                                             aria-hidden="true"></i> {{subir}}
+            </label>
+
+          </div>
+
+        </div>
+        <button class="btn btn-secondary" *ngIf="contain" (click)="abrirModalPreview()" style="float: right; margin-top: 4px"> <i class="fa fa-eye"></i> Ver imágenes</button>
+        <div *ngIf="formIngresar.get('files').errors && (formIngresar.get('files').touched
+                                       || formIngresar.get('files').dirty || obligatorio)"
+             class="form-text text-danger">Campo obligatorio. Debe ingresar al menos una imagen
+        </div>
+      </div>
+    </div>
+<!--    (marcadoSeleccionado)="mostrarMarcador($event)-->
+<!--    <h4>{{categoria}}</h4>-->
+<!--    <h4>Marque un punto de referencia <i class="fa fa-map-marker" aria-hidden="true"></i></h4>-->
+    <app-mapa style="z-index: 0" [categoria]="categoria" [latRepo]="latitud" [longRepo]="longitud" ></app-mapa>
+    <div *ngIf="obligatorio && latitud== undefined"
+         class="form-text text-danger">Debe ingresar un punto de referencia
+    </div>
+    <br>
+    <div class="row">
+      <div class="col" style="text-align: center">
+        <button class="btn btn-danger btn-lg" (click)="reload()">Cancelar</button>
+      </div>
+      <div class="col" style="text-align: center">
+        <button id="ingresar" class="btn btn-success btn-lg" [ngModel]="true" ngDefaultControl
+                [ngModelOptions]="{standalone: true}" (click)="ingresarReporte()">Ingresar
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="progress-line" style="position: relative;bottom: 40vh;display: none"></div>
+  <br><br>
+</div>
+
+<div class="modal" *ngIf="ver2" [ngStyle]="{'display':modal.oculto}">
+  <div class="modal-dialog" style="background: #03BFCB">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+        </button>
+      </div>
+<!--      <div class="card" *ngFor="let url of urls">-->
+<!--        <img class="card-img-top" [src]="url" alt="">-->
+<!--      </div>-->
+
+        <div class="container-fluid">
+          <div class="card-columns" style="text-align: center; align-items: center; position: relative">
+            <div class="card" *ngFor="let url of urls; let i = index"  [id]="i" style="text-align: center; max-width: 60%">
+                <img class="card-img img-fluid" [src]="url" style="width: 150px">
+<!--              (click)="closeThumbnail(i)"-->
+                <a class="card-title" type="button" (click)="closeThumbnail(i)" style="position: absolute; float: right"> <i class="fa fa-trash fa-2x" style="color: red"></i> </a>
+
+            </div>
+          </div>
+        </div>
+
+  </div>
+</div>
+
+<div class="modal" *ngIf="ver" [ngStyle]="{'display':modal.oculto}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <video *ngIf="video" class="myVideo" style="width: 100%" autoplay controls
+               src="../../../assets/botonHelpIngresar.mp4"></video>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

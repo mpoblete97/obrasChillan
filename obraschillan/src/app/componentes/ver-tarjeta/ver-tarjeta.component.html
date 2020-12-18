@@ -1,0 +1,227 @@
+<div class="modal" *ngIf="nombre=='Reporte'&&!charging&&(router.isActive('/dashEncargado/reportes',true) || this.router.isActive('/dashCiudadano/reportes_ingresados',true))" [ngStyle]="{'display':modal.oculto}" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Reporte</h2>
+                <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+          </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="!charging" class="carrusel">
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{imagenes[0].url}}" class="d-block w-100" alt="...">
+                            </div>
+                            <div *ngFor="let imagen of imagenes | slice:1" class="carousel-item">
+                                <img src="{{imagen.url}}" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="contendor">
+
+                    <div class="fecha">
+                        <h4>Id: {{Reporte.idReporte}}</h4>
+                        <h4>Fecha: {{transformDate(Reporte.fecha)}}</h4>
+                    </div>
+                    <div id="progressbar1" class="progressbar">
+                        <ul class="list-unstyled multi-steps">
+                            <li id="Ingresado1" [ngClass]="{'is-active':Reporte.estado === 'Ingresado' }">
+                                <p>Ingresado</p>
+                            </li>
+                            <li id="Recepcionado1" [ngClass]="{'is-active':Reporte.estado === 'Recepcionado' }">
+                                <p>Recepcionado</p>
+                            </li>
+                            <li id="En proceso1" [ngClass]="{'is-active':Reporte.estado === 'En proceso' }">
+                                <p>En proceso</p>
+                            </li>
+                            <li id="Aceptado/Rechazado1" [ngClass]="{'is-active':Reporte.estado === 'Aceptado' || Reporte.estado === 'Rechazado'}">
+                                <p>{{bi_estado}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--          <div class="estado">-->
+                    <!--            <h4>Estado: {{Reporte.estado}}</h4>-->
+                    <!--          </div>-->
+                    <div class="descripcion">
+                        <h4>Descripción</h4>
+                        <p style="text-align: justify"> {{Reporte.descripcion}}</p>
+                    </div>
+<!--                    <div class="comentarios">-->
+<!--                        <h4>Comentarios</h4>-->
+<!--                        <p style="text-align: justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur cumque facere laudantium quisquam quos reprehenderit repudiandae similique tempora tenetur velit.</p>-->
+<!--                    </div>-->
+                    <div class="razones" *ngIf="this.Reporte.estado=='Rechazado'">
+                        <h4>Razones</h4>
+                        <p style="text-align: justify">{{Reporte.razones}}</p>
+                    </div>
+                </div>
+                <div class="mapa">
+                    <h4>Ubicación</h4>
+                    <app-mapa [latRepo]="Reporte.latitud" [longRepo]="Reporte.longitud"></app-mapa>
+                </div>
+                <div class="modal-footer">
+                    <div class="botones">
+                        <button *ngIf="Recepcionado(Reporte.estado) && router.isActive('/dashEncargado/reportes',true) " (click)="recibir()" type="button" class="btn btn-primary" id="recibir">Recepcionar</button>
+                        <button (click)="ocultarModal()" type="button" class="btn btn-danger">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Finanzas-->
+
+<div class="modal" *ngIf="!charging&&(nombre=='Propuesta' || nombre=='Propuesta2') && (router.isActive('/dashFinanzas/propuestas',true) ||  router.isActive('/dashEncargado/propuestas',true) || router.isActive('/dashEncargado/reportes',true) || router.isActive('/dashCiudadano/reportes_ingresados',true))"
+    [ngStyle]="{'display':modal.oculto}" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Propuesta</h2>
+                <button (click)="ocultarModal()" type="button" class="close" data-dismiss="modal">&times;
+        </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="!charging" class="carrusel">
+                    <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{imagenes[0].url}}" class="d-block w-100" alt="...">
+                            </div>
+                            <div *ngFor="let imagen of imagenes | slice:1" class="carousel-item">
+                                <img src="{{imagen.url}}" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls2" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls2" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="contendor1">
+                    <h2 class="titulo">Reporte:</h2>
+                    <div class="fecha">
+                        <h4>Id: {{Reporte.idReporte}}</h4>
+                        <h4>Fecha: {{transformDate(Reporte.fecha)}}</h4>
+                    </div>
+                    <div id="progressbar" class="progressbar">
+                        <ul class="list-unstyled multi-steps">
+                            <li id="Ingresado" [ngClass]="{'is-active':Reporte.estado === 'Ingresado' }">
+                                <p>Ingresado</p>
+                            </li>
+                            <li id="Recepcionado" [ngClass]="{'is-active':Reporte.estado === 'Recepcionado' }">
+                                <p>Recepcionado</p>
+                            </li>
+                            <li id="En proceso" [ngClass]="{'is-active':Reporte.estado === 'En proceso' }">
+                                <p>En proceso</p>
+                            </li>
+                            <li id="Aceptado/Rechazado" [ngClass]="{'is-active':Reporte.estado === 'Aceptado' || Reporte.estado === 'Rechazado'}">
+                                <p>{{bi_estado}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="descripcion">
+                        <h4>Descripción</h4>
+                        <p style="text-align: justify"> {{Reporte.descripcion}}</p>
+                    </div>
+<!--                    <div *ngIf="tipo === 'encargado'" class="comentarios">-->
+<!--                        <h4>Comentarios</h4>-->
+<!--                        <p style="text-align: justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur cumque facere laudantium quisquam quos reprehenderit repudiandae similique tempora tenetur velit.</p>-->
+<!--                    </div>-->
+                    <h2 class="titulo1">Propuesta:</h2>
+                    <div class="fecha1">
+                        <h4>Id: {{Propuesta.idPropuesta}}</h4>
+                        <h4>Fecha: {{transformDate(Propuesta.fecha)}}</h4>
+                    </div>
+                    <div class="tipo1">
+                        <h4>Tipo: {{Propuesta.tipo}}</h4>
+                    </div>
+                    <div class="descripcion1">
+                        <h4>Descripción</h4>
+                        <p style="text-align: justify"> {{Propuesta.descripcion}}</p>
+                    </div>
+                    <div *ngIf="this.Reporte.estado=='Rechazado'" class="razones1">
+                        <h4>Razones</h4>
+                        <p style="text-align: justify">{{Propuesta.razones}}</p>
+                    </div>
+                </div>
+                <div class="tabla">
+                    <h4>Costos propuesta: </h4>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Detalle</th>
+                                <th scope="col">Costo Unitario</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let costo of costos; let i=index">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{costo.detalle}}</td>
+                                <td>${{costo.costo_unitario}}</td>
+                                <td>{{costo.cantidad}}</td>
+                                <td>${{costo.cantidad*costo.costo_unitario}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="archivos">
+                    <h4>Archivos de la propuesta: </h4>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Tipo</th>
+                                <th style="text-align: center" scope="col">Descargar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let archivo of archivos; let i=index">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{archivo.url.slice(40)}}</td>
+                                <td>
+                                    <label *ngIf="extension(archivo.url.slice(40))== 'pdf'">PDF</label>
+                                    <label *ngIf="extension(archivo.url.slice(40))== 'doc' || extension(archivo.url.slice(40))=='docx'">WORD</label>
+                                    <label *ngIf="extension(archivo.url.slice(40))=='xlsx'" src="assets/Excel.png ">EXCEL</label>
+                                    <img *ngIf="extension(archivo.url.slice(40))== 'pdf'" src="assets/pdf.png" alt="" style="background: transparent" width="30" height="30">
+                                    <img *ngIf="extension(archivo.url.slice(40))== 'doc' || extension(archivo.url.slice(40))=='docx'" src="assets/word.png " alt=" " style="background: transparent " width="30 " height="30 ">
+                                    <img *ngIf="extension(archivo.url.slice(40))=='xlsx'" src="assets/Excel.png " alt=" " style="background: transparent " width="30 " height="30 ">
+                                </td>
+                                <td style="text-align: center"><button type="button" class="btn btn-info" style="background: #052a5d; border:#052a5d;" (click)="descargarArchivo(archivo.url)"><i class="fa fa-download"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mapa">
+                    <h4>Ubicación</h4>
+                    <app-mapa [latRepo]="latitud" [longRepo]="longitud"></app-mapa>
+                </div>
+                <div class="modal-footer">
+                    <div class="botones">
+                        <button id="save" *ngIf="router.isActive('/dashFinanzas/propuestas',true)&&acceptAndRefuse(this.Reporte.estado)" (click)="accept()" type="button" class="btn btn-primary">Aceptar</button>
+                        <button *ngIf="acceptAndRefuse(this.Reporte.estado) && router.isActive('/dashFinanzas/propuestas', true)" (click)="refuse()" type="button" id="rechazar" class="btn btn-danger">Rechazar</button>
+                        <button (click)="ocultarModal()" type="button" id="cerrar" class="btn btn-danger">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
